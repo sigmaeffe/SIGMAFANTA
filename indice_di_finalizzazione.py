@@ -11,7 +11,7 @@ BACKGROUND_COLOR = "#230094"
 SECONDARY_COLOR = "#0CFACA"
 PRIMARY_COLOR = "#faa001"
 
-GRAPHIC_PATH = Path("C:\\Users\\feder\\SigmaEffe\\Brand_graphic")
+GRAPHIC_PATH = Path("./graphics")
 rc = {
     "axes.facecolor": BACKGROUND_COLOR,
     "axes.edgecolor": BACKGROUND_COLOR,
@@ -86,9 +86,7 @@ def main():
     # st.plotly_chart(plot)
 
     st.header("Com'è calcolato l'indice di finalizzazione?")
-    equation = Image.open(
-        GRAPHIC_PATH / "..\\Streamlit\\Indice_di_finalizzazione\\formula.png"
-    )
+    equation = Image.open(GRAPHIC_PATH / "formula.png")
 
     st.columns((0.4, 0.1, 0.4))[1].image(equation, use_column_width=True)
     st.write("npG: gol segnati senza rigori, npxG: gol attesi senza rigori.")
