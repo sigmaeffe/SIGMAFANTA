@@ -38,12 +38,13 @@ def main():
         page_icon=icon, page_title="Indice di finalizzazione", layout="wide"
     )
 
-    st.header("Quali squadre concretizzano meglio i gol attesi?")
     cols = st.columns((0.8, 0.2))
     with cols[0]:
         st.title("INDICE DI FINALIZZAZIONE (i_f)")
     with cols[1]:
         st.image(high_icon)
+
+    st.subheader("Quali squadre concretizzano meglio i gol attesi?")
 
     p_data = get_players_data()
     pen_data = p_data[p_data.goals != p_data.npg]
@@ -81,7 +82,7 @@ def main():
     for label in ax.yaxis.get_ticklabels():
         label.set_color("#0cfaca")
 
-    st.pyplot(fig, dpi=600)
+    st.pyplot(fig, dpi=800)
     # plot = px.bar(data_frame=data, x="i_f", y="team", orientation="h")
     # st.plotly_chart(plot)
 
@@ -90,11 +91,15 @@ def main():
 
     st.columns((0.4, 0.1, 0.4))[1].image(equation, use_column_width=True)
     st.write("npG: gol segnati senza rigori, npxG: gol attesi senza rigori.")
-    st.write("##")
-    st.write("Qui trovi la spiegazione dell'indice:")
-    st.write(
+    st.markdown("##")
+
+    cols = st.columns((0.8, 0.2))
+    cols[0].subheader("Spiegazione dell'indice:")
+    cols[0].write(
         "Post: [Instagram](https://www.instagram.com/p/CjA3uLFt85o/?utm_source=ig_web_copy_link) Articolo: [Blog](http://www.sigmaeffe.it/2022/09/fantacalcio-quali-squadre-di-serie.html)"
     )
+    cols[1].subheader("Fonte dati")
+    cols[1].write("Understat: [understat.com](https://understat.com/)")
 
     # st.markdown("##")
     # st.markdown("##")
@@ -114,18 +119,19 @@ def main():
     # )
 
     st.markdown("##")
+
     st.markdown("##")
-    st.header("Fonte dati")
-    st.write("Understat: [understat.com](https://understat.com/)")
+    bottom_image = Image.open(GRAPHIC_PATH / "nome_logo_slogan_streamlit.png")
+
+    st.markdown("##")
+    st.header("Creato da [SIGMAEFFE](http://www.sigmaeffe.it)")
+    cols = st.columns((0.2, 0.6, 0.2))
+    cols[1].image(bottom_image)
 
     st.markdown("##")
     st.markdown("##")
-
-    st.header(
-        "Creato da [SIGMAEFFE](http://www.sigmaeffe.it): Fantacalcio e Statistica"
-    )
-    st.header("Seguimi e sostienimi")
     cols = st.columns((0.3, 0.05, 0.1, 0.05, 0.3))
+    cols[0].subheader("Seguimi su")
     cols[1].markdown(
         '<a href="https://www.instagram.com/sigmaeffe"><img alt="Instagram" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width=40>',
         unsafe_allow_html=True,
