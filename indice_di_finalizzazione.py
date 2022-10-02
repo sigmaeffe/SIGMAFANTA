@@ -2,10 +2,10 @@ from pathlib import Path
 
 # import altair as alt
 import matplotlib.pyplot as plt
-from robinho.understat.utils import get_players_data, get_teams_data
 import seaborn as sns
 import streamlit as st
 from PIL import Image
+from utils import get_players_data, get_teams_data
 
 BACKGROUND_COLOR = "#230094"
 SECONDARY_COLOR = "#0CFACA"
