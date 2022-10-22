@@ -28,6 +28,17 @@ rc = {
     "ytick.labelsize": 8,
 }
 
+page_bg = f"""
+<style>
+.stApp{{
+background: rgb(2,0,36);
+background: linear-gradient(165deg, rgba(2,0,36,1) 0%, rgba(35,0,148,1) 54%, rgba(12,250,202,1) 100%);
+background-attachment: fixed;
+backgroun-size: cover
+}}
+</style>
+"""
+
 
 def main():
     plt.rcParams.update(rc)
@@ -35,6 +46,8 @@ def main():
     icon = Image.open(GRAPHIC_PATH / "logo-sfondo.png")
     high_icon = Image.open(GRAPHIC_PATH / "nome_logo_orizzontale.png")
     st.set_page_config(page_icon=icon, page_title="SIGMASUITE", layout="wide")
+
+    # st.markdown(page_bg, unsafe_allow_html=True)
 
     cols = st.columns((0.8, 0.2))
     with cols[1]:
@@ -67,7 +80,7 @@ def main():
         .mark_bar()
         .encode(
             y=alt.Y("team:O", sort="-x"),
-            x="i_f:Q"
+            x=alt.X("i_f:Q", axis=None)
             # color="EnergyType:N"
         )
     )
@@ -79,7 +92,13 @@ def main():
         color="white",  # fontStyle="bold", fontSize=20
     ).encode(text=alt.Text("i_f:Q", format=",.2f"))
 
-    st.altair_chart(bar_chart + text, use_container_width=True)
+    bar_plot = (
+        alt.layer(bar_chart, text)
+        .configure_view(stroke="transparent")
+        .configure_axis(domainWidth=0.8, grid=False)
+    )
+
+    st.altair_chart(bar_plot, use_container_width=True)
 
     st.header("Com'è calcolato l'indice di finalizzazione?")
     st.write(
