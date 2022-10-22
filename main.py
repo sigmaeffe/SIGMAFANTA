@@ -37,10 +37,10 @@ def main():
     st.set_page_config(page_icon=icon, page_title="SIGMASUITE", layout="wide")
 
     cols = st.columns((0.8, 0.2))
-    with cols[0]:
-        st.title("INDICE DI FINALIZZAZIONE (i_f)")
     with cols[1]:
-        st.image(high_icon)
+        st.image(high_icon, use_column_width=True)
+    with cols[0]:
+        st.title("INDICE DI FINALIZZAZIONE")
 
     st.subheader("Quali squadre concretizzano meglio i gol attesi?")
 
@@ -62,42 +62,30 @@ def main():
     data["i_f"] = data.npg / data.team_npxG
     data = data.sort_values(by=["i_f"], ascending=False)
 
-    # fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(10, 4))
-    # ax.spines["top"].set_visible(False)
-    # ax.spines["right"].set_visible(False)
-    # ax.spines["bottom"].set_visible(False)
-    # ax.spines["left"].set_visible(False)
-
-    # sns.barplot(data=data, y="team", x="i_f", orient="h", ax=ax, color="#11ad8e")
-    # ax.set_xticks([], [])
-    # ax.set(xlabel="", ylabel="")
-    # ax.bar_label(
-    #     ax.containers[-1],
-    #     fmt="%.2f",
-    #     label_type="center",
-    #     color="#ffffff",
-    # )
-    # for label in ax.yaxis.get_ticklabels():
-    #     label.set_color("#0cfaca")
-
-    # st.plotly_chart(fig, dpi=800, use_container_width=True)
-
     bar_chart = (
         alt.Chart(data)
         .mark_bar()
         .encode(
-            y="team:O",
-            x="i_f:Q",
+            y=alt.Y("team:O", sort="-x"),
+            x="i_f:Q"
             # color="EnergyType:N"
         )
     )
-    st.altair_chart(bar_chart, use_container_width=True)
+
+    text = bar_chart.mark_text(
+        align="left",
+        baseline="middle",
+        dx=3,
+        color="white",  # fontStyle="bold", fontSize=20
+    ).encode(text=alt.Text("i_f:Q", format=",.2f"))
+
+    st.altair_chart(bar_chart + text, use_container_width=True)
 
     st.header("Com'è calcolato l'indice di finalizzazione?")
-    equation = Image.open(GRAPHIC_PATH / "formula.png")
+    st.write(
+        "Semplicemente è il rapporto fra i gol segnati senza rigori (npg) e i gol attesi senza rigori (npxG)."
+    )
 
-    st.columns((0.4, 0.1, 0.4))[1].image(equation, use_column_width=True)
-    st.write("npG: gol segnati senza rigori, npxG: gol attesi senza rigori.")
     st.markdown("##")
 
     st.write(
