@@ -30,7 +30,7 @@ def main():
     plt.rcParams.update(RC)
 
     icon = Image.open(GRAPHIC_PATH / "logo-sfondo.png")
-    high_icon = Image.open(GRAPHIC_PATH / "nome_logo.svg")
+    high_icon = Image.open(GRAPHIC_PATH / "nome_logo_orizzontale.png")
 
     st.set_page_config(page_icon=icon, page_title="SIGMASUITE", layout="wide")
 
@@ -51,15 +51,15 @@ def main():
     st.markdown("##")
     cols = st.columns((0.3, 0.05, 0.1, 0.05, 0.3))
     cols[1].markdown(
-        '<a href="https://www.instagram.com/sigmaeffe"><img alt="Instagram" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width=10>',
+        '<a href="https://www.instagram.com/sigmaeffe"><img alt="Instagram" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width=20>',
         unsafe_allow_html=True,
     )
     cols[2].markdown(
-        '<a href="https://www.youtube.com/channel/UCbprtthY7EepkzreoddOTng"><img alt="YouTube" src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" width=40>',
+        '<a href="https://www.youtube.com/channel/UCbprtthY7EepkzreoddOTng"><img alt="YouTube" src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" width=100>',
         unsafe_allow_html=True,
     )
     cols[3].markdown(
-        '<a href="https://it.tipeee.com/sigmaeffe"><img alt="Tipeee" src="https://cdn.cdnlogo.com/logos/t/21/tipeee.svg" width=20>',
+        '<a href="https://it.tipeee.com/sigmaeffe"><img alt="Tipeee" src="https://cdn.cdnlogo.com/logos/t/21/tipeee.svg" width=40>',
         unsafe_allow_html=True,
     )
 
