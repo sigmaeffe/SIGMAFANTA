@@ -23,6 +23,36 @@ def get_players_data(url: str = URL) -> pd.DataFrame:
     return _get_players_data(scripts=scripts)
 
 
+def get_players_if_data(min_goal: int = 0) -> pd.DataFrame:
+    data = get_players_data()
+    data["i_f"] = data.npg / data.npxG
+    data = data.sort_values(by=["i_f"], ascending=False)
+    data = data[data.npg >= min_goal]
+    return data
+
+
+def get_teams_if_data() -> pd.DataFrame:
+    p_data = get_players_data()
+    pen_data = p_data[p_data.goals != p_data.npg]
+    pen_data = pen_data[["goals", "npg", "team"]]
+    pen_data["penalty_goals"] = pen_data.goals.astype("int") - pen_data.npg.astype(
+        "int"
+    )
+    pen_data = pen_data.groupby(by=["team"])[["penalty_goals"]].sum()
+
+    data = get_teams_data()
+    data = data[["team_goals_scored", "team_npxG"]]
+    data["team"] = data.index
+    data = data.merge(
+        right=pen_data, left_on="title", right_on="team", how="left"
+    ).fillna(0)
+    data["npg"] = data.team_goals_scored - data.penalty_goals
+    data["i_f"] = data.npg / data.team_npxG
+    data = data.sort_values(by=["i_f"], ascending=False)
+
+    return data
+
+
 def get_json_data(script) -> pd.DataFrame:
     s_string = script.string
 
