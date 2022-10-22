@@ -34,7 +34,7 @@ def main():
         "Semplicemente è il rapporto fra i gol segnati senza rigori (npg) e i gol attesi senza rigori (npxG)."
     )
     st.subheader("Cosa indica?")
-    st.write("Ogni quanti npxG unq squadra realizza un gol (in media).")
+    st.write("Ogni quanti npxG una squadra realizza un gol (in media).")
 
     st.markdown("##")
 
