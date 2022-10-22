@@ -104,6 +104,8 @@ def main():
     st.write(
         "Semplicemente è il rapporto fra i gol segnati senza rigori (npg) e i gol attesi senza rigori (npxG)."
     )
+    st.subheader("Cosa indica?")
+    st.write("Ogni quanti npxG unq squadra realizza un gol (in media).")
 
     st.markdown("##")
 
@@ -122,21 +124,21 @@ def main():
     cols = st.columns((0.2, 0.6, 0.2))
     cols[1].image(bottom_image)
 
-    st.markdown("##")
-    st.markdown("##")
-    cols = st.columns((0.3, 0.05, 0.1, 0.05, 0.3))
-    cols[1].markdown(
-        '<a href="https://www.instagram.com/sigmaeffe"><img alt="Instagram" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width=40>',
-        unsafe_allow_html=True,
-    )
-    cols[2].markdown(
-        '<a href="https://www.youtube.com/channel/UCbprtthY7EepkzreoddOTng"><img alt="YouTube" src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" width=150>',
-        unsafe_allow_html=True,
-    )
-    cols[3].markdown(
-        '<a href="https://it.tipeee.com/sigmaeffe"><img alt="Tipeee" src="https://cdn.cdnlogo.com/logos/t/21/tipeee.svg" width=100>',
-        unsafe_allow_html=True,
-    )
+    # st.markdown("##")
+    # st.markdown("##")
+    # cols = st.columns((0.3, 0.05, 0.1, 0.05, 0.3))
+    # cols[1].markdown(
+    #     '<a href="https://www.instagram.com/sigmaeffe"><img alt="Instagram" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width=40>',
+    #     unsafe_allow_html=True,
+    # )
+    # cols[2].markdown(
+    #     '<a href="https://www.youtube.com/channel/UCbprtthY7EepkzreoddOTng"><img alt="YouTube" src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" width=150>',
+    #     unsafe_allow_html=True,
+    # )
+    # cols[3].markdown(
+    #     '<a href="https://it.tipeee.com/sigmaeffe"><img alt="Tipeee" src="https://cdn.cdnlogo.com/logos/t/21/tipeee.svg" width=100>',
+    #     unsafe_allow_html=True,
+    # )
 
 
 if __name__ == "__main__":
