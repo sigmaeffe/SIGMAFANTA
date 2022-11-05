@@ -63,17 +63,43 @@ def display_team_data(team: str) -> None:
     player_stats = pd.json_normalize(players_stats_json)
     player_stats = player_stats[player_stats.team_title == team]
 
-    all_columns = ['player_name', 'games', 'time', 'goals', 'xG', 'assists', 'xA', 'shots', 'key_passes', 'yellow_cards', 'red_cards', 'npg', 'npxG', 'xGChain', 'xGBuildup']
-    int_columns = ['games', 'time', 'goals', 'assists', 'shots', 'key_passes', 'yellow_cards', 'red_cards', 'npg']
-    float_columns = ['xG', 'xA', 'npxG', 'xGChain', 'xGBuildup']
+    all_columns = [
+        "player_name",
+        "games",
+        "time",
+        "goals",
+        "xG",
+        "assists",
+        "xA",
+        "shots",
+        "key_passes",
+        "yellow_cards",
+        "red_cards",
+        "npg",
+        "npxG",
+        "xGChain",
+        "xGBuildup",
+    ]
+    int_columns = [
+        "games",
+        "time",
+        "goals",
+        "assists",
+        "shots",
+        "key_passes",
+        "yellow_cards",
+        "red_cards",
+        "npg",
+    ]
+    float_columns = ["xG", "xA", "npxG", "xGChain", "xGBuildup"]
 
     player_stats = player_stats[all_columns]
 
     for column in int_columns:
-        player_stats[column] = player_stats[column].astype('int')
+        player_stats[column] = player_stats[column].astype("int")
 
     for column in float_columns:
-        player_stats[column] = player_stats[column].astype('float')
+        player_stats[column] = player_stats[column].astype("float")
 
     st.dataframe(team_stats)
     player_stats = player_stats.round(2)
@@ -81,11 +107,21 @@ def display_team_data(team: str) -> None:
 
 
 def parse_team_stats(js_data) -> pd.DataFrame:
-    columns = ['situation', 'shots', 'goals', 'xG', 'shots against', 'goals against', 'xGA']
+    columns = [
+        "situation",
+        "shots",
+        "goals",
+        "xG",
+        "shots against",
+        "goals against",
+        "xGA",
+    ]
     df_data = []
-    for situation, data in js_data['situation'].items():
+    for situation, data in js_data["situation"].items():
         situation_data = list(data.values())
-        situation_data = [situation] + situation_data[:-1] + list(situation_data[-1].values())
+        situation_data = (
+            [situation] + situation_data[:-1] + list(situation_data[-1].values())
+        )
         df_data.append(situation_data)
 
     df = pd.DataFrame(df_data, columns=columns)
@@ -108,13 +144,14 @@ def main():
     with cols[0]:
         st.title("Analizzatore squadre")
 
-    cols = st.columns(2)
-    with cols[0]:
-        team_choice_1 = st.selectbox("Squadra:", TEAMS, key='tc1')
-        display_team_data(team=team_choice_1)
-    with cols[1]:
-        team_choice_2 = st.selectbox("Squadra:", TEAMS, key='tc2')
-        display_team_data(team=team_choice_2)
+    st.header("Coming soon....")
+    # cols = st.columns(2)
+    # with cols[0]:
+    #     team_choice_1 = st.selectbox("Squadra:", TEAMS, key='tc1')
+    #     display_team_data(team=team_choice_1)
+    # with cols[1]:
+    #     team_choice_2 = st.selectbox("Squadra:", TEAMS, key='tc2')
+    #     display_team_data(team=team_choice_2)
 
 
 if __name__ == "__main__":

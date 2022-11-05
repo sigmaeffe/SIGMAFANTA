@@ -108,6 +108,16 @@ def _get_matches_data(scripts) -> pd.DataFrame:
     return matches_data
 
 
+def get_matches_data(url: str = URL) -> pd.DataFrame:
+    page_tree = requests.get(url)
+    page_soup = BeautifulSoup(page_tree.content, "lxml")
+    scripts = page_soup.find_all("script")
+
+    matches_data = _get_matches_data(scripts=scripts)
+
+    return matches_data
+
+
 def get_teams_data(url: str = URL) -> pd.DataFrame:
     page_tree = requests.get(url)
     page_soup = BeautifulSoup(page_tree.content, "lxml")
