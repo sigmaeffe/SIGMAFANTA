@@ -16,13 +16,13 @@ def barplot_if(data, y: str):
         color="white",  # fontStyle="bold", fontSize=20
     ).encode(text=alt.Text("i_f:Q", format=",.2f"))
 
-    bar_plot = (
+    bar_chart = (
         alt.layer(bar_chart, text)
         .configure_view(stroke="transparent")
         .configure_axis(domainWidth=0.8, grid=False)
     )
 
-    return bar_plot
+    return bar_chart
 
 
 def grouped_barplot(data: pd.DataFrame, x: str, y: str, color: str, row: str):

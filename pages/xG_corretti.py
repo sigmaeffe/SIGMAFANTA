@@ -5,7 +5,6 @@ from utils.const import RC, GRAPHIC_PATH, CALENDAR
 from utils.team_idxs import get_teams_indexes
 from utils.plot import grouped_barplot
 import pandas as pd
-import altair as alt
 
 
 def main():
@@ -20,6 +19,8 @@ def main():
         st.image(high_icon, use_column_width=True)
     with cols[0]:
         st.title("npxG corretti")
+
+    st.header("Work in progress")
 
     cols = st.columns((0.5, 0.5))
     with cols[0]:

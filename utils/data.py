@@ -15,12 +15,16 @@ UNDERSTAT_MATCHES_FEATURES_DICT = {
 URL = "https://understat.com/league/Serie_A"
 
 
-def get_players_data(url: str = URL) -> pd.DataFrame:
+def get_players_data(
+    url: str = URL, separate_multi_team_players: bool = False
+) -> pd.DataFrame:
     page_tree = requests.get(url)
     page_soup = BeautifulSoup(page_tree.content, "lxml")
     scripts = page_soup.find_all("script")
 
-    return _get_players_data(scripts=scripts)
+    return _get_players_data(
+        scripts=scripts, separate_multi_team_players=separate_multi_team_players
+    )
 
 
 def get_players_if_data(min_goal: int = 0) -> pd.DataFrame:
@@ -70,7 +74,7 @@ def get_json_data(script) -> pd.DataFrame:
     return data
 
 
-def _get_players_data(scripts) -> pd.DataFrame:
+def _get_players_data(scripts, separate_multi_team_players: bool) -> pd.DataFrame:
     players_data = get_json_data(scripts[3])
     players_data.drop(columns=["id"], inplace=True)
     players_data.rename(columns={"team_title": "team"}, inplace=True)
@@ -93,6 +97,20 @@ def _get_players_data(scripts) -> pd.DataFrame:
 
     for c in float_c:
         players_data[c] = players_data[c].astype("float")
+
+    if separate_multi_team_players:
+        to_append = []
+        for idx in players_data[players_data.team.str.contains(",")].index:
+            row = players_data.loc[idx]
+            row_teams = row.team.split(",")
+            players_data.loc[idx, "team"] = row_teams[0]
+            for i in range(1, len(row_teams)):
+                r_copy = row.copy()
+                r_copy.team = row_teams[i]
+
+                to_append.append(r_copy)
+        to_append = pd.concat(to_append, axis=1).T
+        players_data = pd.concat([players_data, to_append]).reset_index(drop=True)
 
     return players_data
 
