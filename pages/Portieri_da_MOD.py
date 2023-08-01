@@ -69,7 +69,7 @@ def main():
     mv_df = mv_df[mv_df["Numero voti"] >= min_matches]
     mv_df.sort_values("MV", ascending=False, inplace=True)
 
-    formatted_mv__df = mv_df.style.set_precision(2).background_gradient(
+    formatted_mv__df = mv_df.style.format(precision=2).background_gradient(
         subset=["MV"], cmap=cmap1
     )
     st.dataframe(formatted_mv__df)
