@@ -46,7 +46,7 @@ def main():
             "#0be3b6ff",
         ],
     )
-    chart = alt.Chart(v_data).mark_bar().encode(x="Nome", y=col)
+    chart = alt.Chart(v_data).mark_bar().encode(y="Nome", x=col)
 
     st.altair_chart(chart)
 
