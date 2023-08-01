@@ -36,6 +36,7 @@ def main():
     v_data = v_data[v_data.Voto >= min_matches].copy()
     col = "Percentuale_voti_utili"
     v_data[col] = (v_data.trues / v_data.Voto).astype(float)
+    v_data["text"] = v_data.Percentuale_voti_utili.apply(lambda x: str(round(x, 2)))
 
     v_data.sort_values(by=col, ascending=False, inplace=True)
 
@@ -46,8 +47,10 @@ def main():
             "#0be3b6ff",
         ],
     )
-    chart = alt.Chart(v_data).mark_bar().encode(y="Nome", x=col).properties(width=300)
-
+    base = alt.Chart(v_data).mark_bar().encode(y="Nome", x=col, text="text")
+    chart = base.mark_bar().properties(width=300) + base.mark_text(
+        align="left", dx=2, color="white"
+    )
     st.altair_chart(chart)
 
     st.subheader("Media Voto portieri")
