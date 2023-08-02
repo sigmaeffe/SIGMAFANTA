@@ -78,7 +78,11 @@ def main():
             "#0be3b6ff",
         ],
     )
-    base = alt.Chart(choosen_min_data).mark_bar().encode(y="Nome", x=col, text="text")
+    base = (
+        alt.Chart(choosen_min_data)
+        .mark_bar()
+        .encode(y=alt.Y("Nome"), x=alt.X(col), text="text")
+    )
     chart = base.mark_bar().properties(width=300) + base.mark_text(
         align="left", dx=2, color="white"
     )
@@ -111,14 +115,28 @@ def main():
 
     st.subheader("Confronta giocatori")
 
+    all_v_data.sort_values(by=col, ascending=False, inplace=True)
+
     cols = st.columns(2)
-    player_1 = cols[0].selectbox(label="Giocatore 1", options=all_v_data.Nome)
-    player_2 = cols[1].selectbox(label="Giocatore 2", options=all_v_data.Nome)
+    names = all_v_data.Nome
+    player_1 = cols[0].selectbox(label="Giocatore 1", options=names, index=0)
+    player_2 = cols[1].selectbox(label="Giocatore 2", options=names, index=1)
 
     c_data = all_v_data[all_v_data.Nome.isin([player_1, player_2])]
     print(c_data)
 
-    base_c = alt.Chart(c_data).mark_bar().encode(y="min_voto", x=col, color="Nome")
+    base_c = (
+        alt.Chart(c_data)
+        .mark_bar(color="white")
+        .encode(
+            x=alt.X("Nome", axis=None),
+            y=col,
+            color="Nome",
+            column=alt.Column(
+                "min_voto", header=alt.Header(labelColor="white", labelFontSize=15)
+            ),
+        )
+    )
     chart_c = base_c.mark_bar()  # + base_c.mark_text(align="left", dx=2, color="white")
     st.altair_chart(chart_c)
     st.markdown("##")
