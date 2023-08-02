@@ -16,12 +16,19 @@ def main():
     st.header("Esplora i migliori difensori da MOD della Serie A 2022-2023")
 
     st.subheader("Voti utili per il modificatore di difesa")
+
+    voto_mins = [6.0, 6.5, 7.0]
     voto_min = st.slider(
-        "Voto minimo da considerate", min_value=6.0, max_value=7.0, step=0.5, value=6.5
+        "Voto minimo da considerate",
+        min_value=voto_mins[0],
+        max_value=voto_mins[2],
+        step=0.5,
+        value=voto_mins[1],
     )
     min_matches = st.slider("Numero minimo di voti", 1, 30, value=20)
+    col = "Percentuale_voti_utili"
 
-    v_data = (
+    choosen_min_data = (
         data[data.Voto >= voto_min][["Nome", "Voto"]]
         .groupby("Nome")
         .count()
@@ -29,16 +36,40 @@ def main():
         .rename(columns={"Voto": "trues"})
         .copy()
     )
-    v_data = v_data.merge(
+    choosen_min_data = choosen_min_data.merge(
         data[["Nome", "Voto"]].groupby("Nome").count(), on="Nome", how="left"
     )
+    choosen_min_data = choosen_min_data[choosen_min_data.Voto >= min_matches].copy()
 
-    v_data = v_data[v_data.Voto >= min_matches].copy()
-    col = "Percentuale_voti_utili"
-    v_data[col] = (v_data.trues / v_data.Voto).astype(float)
-    v_data["text"] = v_data.Percentuale_voti_utili.apply(lambda x: str(round(x, 2)))
+    choosen_min_data[col] = (choosen_min_data.trues / choosen_min_data.Voto).astype(
+        float
+    )
+    choosen_min_data["text"] = choosen_min_data[col].apply(lambda x: str(round(x, 2)))
 
-    v_data = v_data.iloc[:40].copy()
+    all_v_data = []
+    for v in voto_mins:
+        v_data = (
+            data[data.Voto >= v][["Nome", "Voto"]]
+            .groupby("Nome")
+            .count()
+            .reset_index()
+            .rename(columns={"Voto": "trues"})
+            .copy()
+        )
+        v_data = v_data.merge(
+            data[["Nome", "Voto"]].groupby("Nome").count(), on="Nome", how="left"
+        )
+        v_data["min_voto"] = f">={v}"
+
+        v_data = v_data[v_data.Voto >= min_matches].copy()
+
+        v_data[col] = (v_data.trues / v_data.Voto).astype(float)
+
+        all_v_data.append(v_data)
+    all_v_data = pd.concat(all_v_data)
+
+    choosen_min_data.sort_values(by=col, ascending=False, inplace=True)
+    choosen_min_data = choosen_min_data.iloc[:40]
 
     cmap1 = LinearSegmentedColormap.from_list(
         "mycmap",
@@ -47,7 +78,7 @@ def main():
             "#0be3b6ff",
         ],
     )
-    base = alt.Chart(v_data).mark_bar().encode(y="Nome", x=col, text="text")
+    base = alt.Chart(choosen_min_data).mark_bar().encode(y="Nome", x=col, text="text")
     chart = base.mark_bar().properties(width=300) + base.mark_text(
         align="left", dx=2, color="white"
     )
@@ -81,15 +112,14 @@ def main():
     st.subheader("Confronta giocatori")
 
     cols = st.columns(2)
-    player_1 = cols[0].selectbox(label="Giocatore 1", options=v_data.Nome)
-    player_2 = cols[1].selectbox(label="Giocatore 2", options=v_data.Nome)
+    player_1 = cols[0].selectbox(label="Giocatore 1", options=all_v_data.Nome)
+    player_2 = cols[1].selectbox(label="Giocatore 2", options=all_v_data.Nome)
 
-    c_data = v_data[v_data.Nome.isin([player_1, player_2])]
+    c_data = all_v_data[all_v_data.Nome.isin([player_1, player_2])]
+    print(c_data)
 
-    base_c = alt.Chart(c_data).mark_bar().encode(y="Nome", x=col, text="text")
-    chart_c = base_c.mark_bar().properties(width=300) + base_c.mark_text(
-        align="left", dx=2, color="white"
-    )
+    base_c = alt.Chart(c_data).mark_bar().encode(y="min_voto", x=col, color="Nome")
+    chart_c = base_c.mark_bar()  # + base_c.mark_text(align="left", dx=2, color="white")
     st.altair_chart(chart_c)
     st.markdown("##")
 
