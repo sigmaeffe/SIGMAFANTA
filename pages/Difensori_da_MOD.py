@@ -7,11 +7,11 @@ import altair as alt
 def main():
     data = pd.read_csv("./data/voti_22_23.csv", index_col=0)
     data = data[data.Ruolo == "D"]
-
-    exclude_bonus = st.checkbox("Escludi giornate con rigori parati", value=True)
+    print(data)
+    exclude_bonus = st.checkbox("Escludi giornate con bonus", value=True)
 
     if exclude_bonus:
-        data = data[data.Rp == 0]
+        data = data[(data.Gf == 0) & (data.Ass == 0)]
 
     st.header("Esplora i migliori difensori da MOD della Serie A 2022-2023")
 
@@ -38,7 +38,6 @@ def main():
     v_data[col] = (v_data.trues / v_data.Voto).astype(float)
     v_data["text"] = v_data.Percentuale_voti_utili.apply(lambda x: str(round(x, 2)))
 
-    v_data.sort_values(by=col, ascending=False, inplace=True)
     v_data = v_data.iloc[:40].copy()
 
     cmap1 = LinearSegmentedColormap.from_list(
@@ -79,7 +78,23 @@ def main():
 
     st.dataframe(formatted_mv__df)
 
-    st.write(
+    st.subheader("Confronta giocatori")
+
+    cols = st.columns(2)
+    player_1 = cols[0].selectbox(label="Giocatore 1", options=v_data.Nome)
+    player_2 = cols[1].selectbox(label="Giocatore 2", options=v_data.Nome)
+
+    c_data = v_data[v_data.Nome.isin([player_1, player_2])]
+
+    base_c = alt.Chart(c_data).mark_bar().encode(y="Nome", x=col, text="text")
+    chart_c = base_c.mark_bar().properties(width=300) + base_c.mark_text(
+        align="left", dx=2, color="white"
+    )
+    st.altair_chart(chart_c)
+    st.markdown("##")
+
+    cols = st.columns([0.8, 0.1])
+    cols[1].write(
         "Fonte voti: [fantacalcio.it](https://fantacalcio.it/)",
     )
 

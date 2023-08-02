@@ -77,7 +77,8 @@ def main():
     )
     st.dataframe(formatted_mv__df)
 
-    st.write(
+    cols = st.columns([0.8, 0.1])
+    cols[1].write(
         "Fonte voti: [fantacalcio.it](https://fantacalcio.it/)",
     )
 
