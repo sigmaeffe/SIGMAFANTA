@@ -45,7 +45,16 @@ def main():
     cols[1].image(bottom_image)
 
     st.markdown("##")
-    st.write("Nel menu a sinistra trovi tutte le SIGMAPP.")
+    # st.write("Nel menu a sinistra trovi tutte le SIGMAPP.")
+    st.markdown(
+        '<a href="/Portieri_da_MOD" target="_self">Portieri da MOD</a>',
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        '<a href="/Difensori_da_MOD" target="_self">Difensori da MOD</a>',
+        unsafe_allow_html=True,
+    )
 
     st.markdown("##")
     st.markdown("##")
