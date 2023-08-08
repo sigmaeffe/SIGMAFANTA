@@ -60,7 +60,7 @@ def main():
 
     st.markdown("##")
     st.markdown("##")
-    cols = st.columns((0.2, 0.05, 0.05, 0.05, 0.1, 0.2))
+    cols = st.columns((0.2, 0.04, 0.04, 0.06, 0.08, 0.2))
     cols[1].markdown(
         '<a href="https://www.instagram.com/sigmaeffe"><img alt="Instagram" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width=40>',
         unsafe_allow_html=True,
@@ -70,11 +70,11 @@ def main():
         unsafe_allow_html=True,
     )
     cols[3].markdown(
-        '<a href="https://it.tipeee.com/sigmaeffe"><img alt="Tipeee" src="https://cdn.cdnlogo.com/logos/t/21/tipeee.svg" width=80>',
+        '<a href="https://it.tipeee.com/sigmaeffe"><img alt="Tipeee" src="https://cdn.cdnlogo.com/logos/t/21/tipeee.svg" width=100>',
         unsafe_allow_html=True,
     )
     cols[4].markdown(
-        '<a href="https://medium.com/@markfootballdata"><img alt="Medium" src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Medium_%28website%29_logo.svg" width=80>',
+        '<a href="https://medium.com/@markfootballdata"><img alt="Medium" src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Medium_%28website%29_logo.svg" width=140>',
         unsafe_allow_html=True,
     )
 
