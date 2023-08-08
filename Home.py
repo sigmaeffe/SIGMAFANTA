@@ -58,17 +58,21 @@ def main():
 
     st.markdown("##")
     st.markdown("##")
-    cols = st.columns((0.3, 0.05, 0.1, 0.05, 0.3))
+    cols = st.columns((0.2, 0.05, 0.05, 0.05, 0.1, 0.2))
     cols[1].markdown(
-        '<a href="https://www.instagram.com/sigmaeffe"><img alt="Instagram" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width=20>',
+        '<a href="https://www.instagram.com/sigmaeffe"><img alt="Instagram" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width=40>',
         unsafe_allow_html=True,
     )
     cols[2].markdown(
-        '<a href="https://www.youtube.com/channel/UCbprtthY7EepkzreoddOTng"><img alt="YouTube" src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" width=100>',
+        '<a href="https://twitter.com/sigmaeffe"><img alt="Twitter" src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg" width=40>',
         unsafe_allow_html=True,
     )
     cols[3].markdown(
-        '<a href="https://it.tipeee.com/sigmaeffe"><img alt="Tipeee" src="https://cdn.cdnlogo.com/logos/t/21/tipeee.svg" width=40>',
+        '<a href="https://it.tipeee.com/sigmaeffe"><img alt="Tipeee" src="https://cdn.cdnlogo.com/logos/t/21/tipeee.svg" width=80>',
+        unsafe_allow_html=True,
+    )
+    cols[4].markdown(
+        '<a href="https://medium.com/@markfootballdata"><img alt="Medium" src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Medium_%28website%29_logo.svg" width=80>',
         unsafe_allow_html=True,
     )
 

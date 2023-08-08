@@ -87,7 +87,7 @@ def make_bottom():
     st.markdown("##")
 
     st.markdown(
-        "<a href='https://it.tipeee.com/sigmaeffe' class='tipeee-project-cart-iframe' data-orientation='line' data-rewards='1'>Sostieni SIGMAEFFE su Tipeee</a><script async src='https://plugin.tipeee.com/widget.js' charset='utf-8'></script>",
+        "<a href='https://it.tipeee.com/sigmaeffe' class='tipeee-project-cart-iframe' data-orientation='line' data-rewards='1'>Offrimi un caffè</a><script async src='https://plugin.tipeee.com/widget.js' charset='utf-8'></script>",
         unsafe_allow_html=True,
     )
 
