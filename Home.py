@@ -13,6 +13,7 @@ from utils.const import (
     GRAPHIC_PATH,
     RC,
 )
+from utils.mod import LINK_STYLE
 
 page_bg = f"""
 <style>
@@ -46,13 +47,14 @@ def main():
 
     st.markdown("##")
     # st.write("Nel menu a sinistra trovi tutte le SIGMAPP.")
+    st.markdown(LINK_STYLE, unsafe_allow_html=True)
     st.markdown(
-        '<a href="/Portieri_da_MOD" target="_self">Portieri da MOD</a>',
+        '<a href="/Portieri_da_MOD" target="_self" class="custom-link">Portieri da MOD</a>',
         unsafe_allow_html=True,
     )
 
     st.markdown(
-        '<a href="/Difensori_da_MOD" target="_self">Difensori da MOD</a>',
+        '<a href="/Difensori_da_MOD" target="_self" class="custom-link">Difensori da MOD</a>',
         unsafe_allow_html=True,
     )
 

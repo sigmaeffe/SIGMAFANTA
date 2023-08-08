@@ -6,6 +6,22 @@ import altair as alt
 
 VOTO_MINS = [6.0, 6.5, 7.0]
 
+LINK_STYLE = """
+<style>
+.custom-link {
+    color: #faa001;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.custom-link:hover {
+    font-weight: bold;
+    text-decoration: none;
+    color: #faa001
+}
+</style>
+"""
+
 
 def create_v_data(
     df: pd.DataFrame, voto_min: float, col: str, min_matches: int
@@ -86,14 +102,16 @@ def make_df_mv_display(data: pd.DataFrame, min_matches: int):
 def make_bottom():
     st.markdown("##")
 
+    st.markdown(LINK_STYLE, unsafe_allow_html=True)
     st.markdown(
-        "<a href='https://it.tipeee.com/sigmaeffe' class='tipeee-project-cart-iframe' data-orientation='line' data-rewards='1'>Offrimi un caffè</a><script async src='https://plugin.tipeee.com/widget.js' charset='utf-8'></script>",
+        f'<a href="https://it.tipeee.com/sigmaeffe" class="custom-link">Offrimi un caffè</a>',
         unsafe_allow_html=True,
     )
 
     cols = st.columns([0.3, 0.1])
-    cols[1].write(
-        "Fonte voti: [fantacalcio.it](https://fantacalcio.it/)",
+    cols[1].markdown(
+        f'Fonte voti: <a href="https://fantacalcio.it/" class="custom-link">fantacalcio.it</a>',
+        unsafe_allow_html=True,
     )
 
 
