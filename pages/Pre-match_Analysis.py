@@ -89,7 +89,8 @@ def team_page(
 
 def main():
     players_data = get_players_data().round(2)
-    teams_data = get_teams_data().round(2)
+    teams_data = get_teams_data()
+    teams_data = teams_data.round(2)
     teams_data.columns = [c[5:] for c in teams_data.columns]
 
     st.header(
