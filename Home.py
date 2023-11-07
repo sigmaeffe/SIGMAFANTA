@@ -1,15 +1,7 @@
-from pathlib import Path
-
-import altair as alt
 import matplotlib.pyplot as plt
-import seaborn as sns
 import streamlit as st
 from PIL import Image
-from utils.data import get_players_data, get_teams_data
 from utils.const import (
-    BACKGROUND_COLOR,
-    SECONDARY_COLOR,
-    PRIMARY_COLOR,
     GRAPHIC_PATH,
     RC,
 )
@@ -48,15 +40,15 @@ def main():
     st.markdown("##")
     # st.write("Nel menu a sinistra trovi tutte le SIGMAPP.")
     st.markdown(LINK_STYLE, unsafe_allow_html=True)
-    st.markdown(
-        '<a href="/Portieri_da_MOD" target="_self" class="custom-link">Portieri da MOD</a>',
-        unsafe_allow_html=True,
-    )
+    # st.markdown(
+    #     '<a href="/Portieri_da_MOD" target="_self" class="custom-link">Portieri da MOD</a>',
+    #     unsafe_allow_html=True,
+    # )
 
-    st.markdown(
-        '<a href="/Difensori_da_MOD" target="_self" class="custom-link">Difensori da MOD</a>',
-        unsafe_allow_html=True,
-    )
+    # st.markdown(
+    #     '<a href="/Difensori_da_MOD" target="_self" class="custom-link">Difensori da MOD</a>',
+    #     unsafe_allow_html=True,
+    # )
 
     st.markdown("##")
     st.markdown("##")
