@@ -145,8 +145,8 @@ def main():
 
     results_matrix *= 100
     result_matrix_fig = px.imshow(results_matrix.round(2), text_auto=True)
-    result_matrix_fig.update_xaxes(title="Trasferta")
-    result_matrix_fig.update_yaxes(title="Casa")
+    result_matrix_fig.update_xaxes(title="Gol Trasferta")
+    result_matrix_fig.update_yaxes(title="Gol Casa")
     result_matrix_fig.update_layout(width=1000, height=700)
     st.plotly_chart(result_matrix_fig)
 
