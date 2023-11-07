@@ -148,6 +148,8 @@ def main():
     result_matrix_fig.update_xaxes(title="Gol Trasferta")
     result_matrix_fig.update_yaxes(title="Gol Casa")
     result_matrix_fig.update_layout(width=1000, height=700)
+
+    st.write("Probabilità di ogni risultato.")
     st.plotly_chart(result_matrix_fig)
 
     prob_hwin = np.sum(np.triu(results_matrix.T, k=1))
