@@ -6,5 +6,6 @@ bs4
 json5==0.9.10
 requests==2.28.1
 pathlib==1.0.1
+plotly==5.17.0
 streamlit==1.13.0
 scikit-learn==1.1.3
