@@ -50,6 +50,8 @@ def main():
     #     unsafe_allow_html=True,
     # )
 
+    st.header("Benvenuto/a nella suite di analisi!")
+
     st.markdown("##")
     st.markdown("##")
     cols = st.columns((0.2, 0.04, 0.04, 0.06, 0.08, 0.2))
