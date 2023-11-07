@@ -1,9 +1,12 @@
+from itertools import product
 from typing import Sequence
 import streamlit as st
 from utils.data import get_teams_data, get_players_data
-import plotly.express as px
 import pandas as pd
 import plotly.graph_objects as go
+import numpy as np
+from scipy.stats import poisson
+import plotly.express as px
 
 
 def draw_top_k_stat(
@@ -86,6 +89,8 @@ def team_page(
             players_data=team_players_data, stat_name=stat_name_choose, right=right
         )
 
+        return team, team_data.xG / (team_data.wins + team_data.draws + team_data.loses)
+
 
 def main():
     players_data = get_players_data().round(2)
@@ -104,20 +109,66 @@ def main():
 
     teams = teams_data.index.to_numpy()
     columns = st.columns(2)
-    team_page(
+    team_1, xg1 = team_page(
         column=columns[0],
         teams=teams,
         key=0,
         players_data=players_data,
         teams_data=teams_data,
     )
-    team_page(
+    team_2, xg2 = team_page(
         column=columns[1],
         teams=teams,
         key=1,
         players_data=players_data,
         teams_data=teams_data,
         right=True,
+    )
+
+    st.markdown("## Analisi predittiva")
+    st.markdown("### Modello 1: xGM")
+    st.write(
+        "Questo modello è preso da [qui](https://www.jsr.org/index.php/path/article/view/1116) ed è un semplice modello poissoniano che usa come media gli xGP90 di una squadra"
+    )
+
+    MAX_GOLS = 7
+    g1 = np.zeros(MAX_GOLS + 1)
+    g2 = np.zeros(MAX_GOLS + 1)
+
+    for k in range(MAX_GOLS + 1):
+        g1[k] = poisson.pmf(k=k, mu=xg1)
+        g2[k] = poisson.pmf(k=k, mu=xg2)
+
+    results_matrix = np.zeros((MAX_GOLS + 1, MAX_GOLS + 1))
+    for i, j in product(range(MAX_GOLS + 1), range(MAX_GOLS + 1)):
+        results_matrix[i, j] = g1[i] * g2[j]
+
+    results_matrix *= 100
+    result_matrix_fig = px.imshow(results_matrix.round(2), text_auto=True)
+    result_matrix_fig.update_xaxes(title="Trasferta")
+    result_matrix_fig.update_yaxes(title="Casa")
+    result_matrix_fig.update_layout(width=1000, height=700)
+    st.plotly_chart(result_matrix_fig)
+
+    prob_hwin = np.sum(np.triu(results_matrix.T, k=1))
+    prob_awin = np.sum(np.triu(results_matrix, k=1))
+    prob_draw = np.sum(np.diag(results_matrix))
+
+    fig_1x2_probs = px.bar(
+        x=["vince casa", "pareggio", "vince_trasferta"],
+        y=[prob_hwin, prob_draw, prob_awin],
+    )
+    st.plotly_chart(fig_1x2_probs)
+
+    max_prob_result = np.unravel_index(np.argmax(results_matrix), results_matrix.shape)
+    st.write(
+        f"Il risultato più probabile per {team_1} vs {team_2} è "
+        + f"{max_prob_result[0]}-{max_prob_result[1]}, "
+        + f"con probabilità {results_matrix.max().round(2)}%"
+    )
+
+    st.write(
+        "La maggiore limitazione di questo modello è che non considera la forza difensiva dell'avversario"
     )
 
 
