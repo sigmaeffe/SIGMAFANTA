@@ -149,13 +149,14 @@ def main():
     result_matrix_fig.update_yaxes(title="Gol Casa")
     result_matrix_fig.update_layout(width=1000, height=700)
 
-    st.write("Probabilità di ogni risultato.")
+    st.markdown("##### Probabilità di ogni risultato")
     st.plotly_chart(result_matrix_fig)
 
     prob_hwin = np.sum(np.triu(results_matrix.T, k=1))
     prob_awin = np.sum(np.triu(results_matrix, k=1))
     prob_draw = np.sum(np.diag(results_matrix))
 
+    st.markdown("##### Probabilità 1x2")
     fig_1x2_probs = px.bar(
         x=["vince casa", "pareggio", "vince_trasferta"],
         y=[prob_hwin, prob_draw, prob_awin],
