@@ -72,8 +72,8 @@ def generate_simulation_results(url, n_simulations, transparent):
 
     fig = px.density_heatmap(
         df,
-        x=teams[1],
-        y=teams[0],
+        y=match_id.split("-")[0],
+        x=match_id.split("-")[1],
         marginal_x="histogram",
         marginal_y="histogram",
         histnorm="percent",
