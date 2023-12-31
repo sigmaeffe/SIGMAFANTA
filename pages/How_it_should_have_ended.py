@@ -30,9 +30,20 @@ def seaborn_plot(df: pd.DataFrame, match_id, transparent: bool):
         discrete=(True, True),
         cbar=True,
         stat="percent",
+        palette=[
+            "#faa001",
+            "#230094",
+        ],
         cbar_kws={"shrink": 0.8, "format": "%d%%"},
     )
-    g.plot_marginals(sns.histplot, stat="count")
+    g.plot_marginals(
+        sns.histplot,
+        stat="count",
+        palette=[
+            "#faa001",
+            "#230094",
+        ],
+    )
 
     plt.subplots_adjust(left=0.1, right=0.8, top=0.9, bottom=0.1)
     # get the current positions of the joint ax and the ax for the marginal x
@@ -63,8 +74,13 @@ def generate_simulation_results(url, n_simulations, transparent):
     sim_team_b = get_nr_goals_simulation(team_b_shoots_xg, n_simulations=n_simulations)
 
     df = pd.DataFrame({teams[0]: sim_team_a, teams[1]: sim_team_b})
-    df["Result"] = df.apply(lambda x: f"{x[teams[0]]}-{x[teams[1]]}", axis=1)
+
     match_id = url.split("/")[-1]
+    y = match_id.split("-")[0]
+    x = match_id.split("-")[1]
+
+    df["Result"] = df.apply(lambda row: f"{row[y]}-{row[x]}", axis=1)
+
     df = df[df[teams[0]] <= 5]
     df = df[df[teams[1]] <= 5]
 
@@ -72,11 +88,15 @@ def generate_simulation_results(url, n_simulations, transparent):
 
     fig = px.density_heatmap(
         df,
-        y=match_id.split("-")[0],
-        x=match_id.split("-")[1],
+        y=y,
+        x=x,
         marginal_x="histogram",
         marginal_y="histogram",
         histnorm="percent",
+        color_continuous_scale=[
+            "#faa001",
+            "#230094",
+        ],  # Use the same color for start and end
     )
 
     st.plotly_chart(fig)

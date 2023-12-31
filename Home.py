@@ -10,8 +10,7 @@ from utils.mod import LINK_STYLE
 page_bg = f"""
 <style>
 .stApp{{
-background: rgb(2,0,36);
-background: linear-gradient(165deg, rgba(2,0,36,1) 0%, rgba(35,0,148,1) 54%, rgba(12,250,202,1) 100%);
+background: rgb(35,0,148);
 background-attachment: fixed;
 backgroun-size: cover
 }}
@@ -27,7 +26,7 @@ def main():
 
     st.set_page_config(page_icon=icon, page_title="SIGMASUITE", layout="wide")
 
-    st.markdown(page_bg, unsafe_allow_html=True)
+    # st.markdown(page_bg, unsafe_allow_html=True)
 
     cols = st.columns((0.1, 0.8, 0.1))
     cols[1].image(high_icon, use_column_width=True)
@@ -54,21 +53,21 @@ def main():
 
     st.markdown("##")
     st.markdown("##")
-    cols = st.columns((0.2, 0.04, 0.04, 0.06, 0.08, 0.2))
+    cols = st.columns((0.1, 0.04, 0.04, 0.06, 0.08, 0.1))
     cols[1].markdown(
-        '<a href="https://www.instagram.com/sigmaeffe"><img alt="Instagram" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width=40>',
+        '<a href="https://www.instagram.com/sigmaeffe"><img alt="Instagram" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width=20>',
         unsafe_allow_html=True,
     )
     cols[2].markdown(
-        '<a href="https://twitter.com/sigmaeffe"><img alt="Twitter" src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg" width=40>',
+        '<a href="https://twitter.com/sigmaeffe"><img alt="Twitter" src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg" width=20>',
         unsafe_allow_html=True,
     )
     cols[3].markdown(
-        '<a href="https://it.tipeee.com/sigmaeffe"><img alt="Tipeee" src="https://cdn.cdnlogo.com/logos/t/21/tipeee.svg" width=100>',
+        '<a href="https://it.tipeee.com/sigmaeffe"><img alt="Tipeee" src="https://cdn.cdnlogo.com/logos/t/21/tipeee.svg" width=50>',
         unsafe_allow_html=True,
     )
     cols[4].markdown(
-        '<a href="https://medium.com/@markfootballdata"><img alt="Medium" src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Medium_%28website%29_logo.svg" width=140>',
+        '<a href="https://medium.com/@markfootballdata"><img alt="Medium" src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Medium_%28website%29_logo.svg" width=70>',
         unsafe_allow_html=True,
     )
 
